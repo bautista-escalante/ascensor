@@ -6,10 +6,6 @@ Primer parcial
 # Circuito del prototipo
 compuesto por un display 7 segmentos que informa el piso actual, dos diodos led que informan el estado del mismo y tres botones para las opeaciones que desee el usuario
 
-# Descripcion 
-
-
-
 ![Editing ascensor_README md at main · bautista-escalante_ascensor · GitHub - Google Chrome 15_5_2023 18_46_48 (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/b46b2634-a429-4126-8e5d-d4dbd049bc02)
 
 # Codigo
