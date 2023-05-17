@@ -4,9 +4,12 @@ Primer parcial
 ![Circuit design Swanky Inari-Gogo _ Tinkercad - Google Chrome 20_4_2023 20_21_12 (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/ed979e49-ee34-48d3-bc89-53a80d067382)
 
 # Circuito del prototipo
-compuesto por un display 7 segmentos que informa el piso actual, dos diodos led que informan el estado del mismo y tres botones para las opeaciones que desee el usuario
+compuesto por una resistencia de 220ohm, un display 7 segmentos que informa el piso actual, dos diodos led que informan el estado del mismo y tres botones para las opeaciones que desee el usuario
 
 ![Editing ascensor_README md at main · bautista-escalante_ascensor · GitHub - Google Chrome 15_5_2023 18_46_48 (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/b46b2634-a429-4126-8e5d-d4dbd049bc02)
+
+### ¿por que una sola resistencia? ¿y las demas?
+_un circuito electrico se conforma por mayas, es decir, un camino para la corriente, en este caso la resistencia esta en serie a cada uno de los diodos ya que todos usan un lado negativo y no existen nodos en esta configuracion_
 
 # Codigo
   * se definen los pines, contadores y __funciones__ 
