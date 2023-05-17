@@ -56,7 +56,7 @@ esta funcion apaga todos los leds de el display 7 segmentos y los leds de inform
 
 # Link del proyecto
 
-https://www.tinkercad.com/things/8MaoRmXMj6S-ascensor/editel
+[https://www.tinkercad.com/things/8MaoRmXMj6S-ascensor/editel](https://www.tinkercad.com/things/8MaoRmXMj6S)
 
 
 
