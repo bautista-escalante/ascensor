@@ -9,7 +9,7 @@ compuesto por una resistencia de 220ohm, un display 7 segmentos que informa el p
 ![Editing ascensor_README md at main · bautista-escalante_ascensor · GitHub - Google Chrome 15_5_2023 18_46_48 (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/b46b2634-a429-4126-8e5d-d4dbd049bc02)
 
 ### ¿por que una sola resistencia? ¿y las demas?
-_un circuito electrico se conforma por mayas, es decir, un camino para la corriente, en este caso la resistencia esta en serie a cada uno de los diodos ya que todos usan un lado negativo y no existen nodos en esta configuracion_
+_en este caso la resistencia esta en serie a cada uno de los diodos ya que todos usan un lado negativo_
 
 # Codigo
   * se definen los pines, contadores y __funciones__ 
