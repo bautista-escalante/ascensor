@@ -15,44 +15,248 @@ _en este caso la resistencia esta en serie a cada uno de los diodos ya que todos
   * se definen los pines, contadores y __funciones__ 
   * se declara como salida los pines correspondientes a los led y a el display 7 segmentos
   * se declara como entrada a los pines correspondientes a los pulsadores 
-
-![sketch_apr1b _ Arduino IDE 2 0 5-nightly-20230401 15_5_2023 19_05_07 (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/c769bd69-b281-4f09-9779-05a4d2801ad5)
+ ``` cpp 
+ #define A 4
+#define B 5
+#define C 8
+#define D 7
+#define E 6
+#define F 3
+#define G 2
+#define boton1 A0
+#define boton2 A1
+#define boton3 A2
+#define ledPausa 12
+#define ledAccion 13
+int contador=0;
+void ValidarPisos();
+void EncenderDisplay(int numero);
+void Apagar();
+void EncenderLed(int led);
+void operarBotonera();
+ ```
 
 # funciones
 
 ### Operar botonera
  esta funcion evalua el boton que el usuario presiono y ejecuta la funcion correspondiente 
-
-![operar botonera (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/7ebaccbb-c782-4600-8f5c-23839750d2d5)
+``` cpp 
+void operarBotonera()
+ {
+	int sube =analogRead(boton1);
+  	int baja = analogRead(boton2);
+    if (sube!=LOW )
+    {
+      contador++;
+      Serial.println("en movimiento");
+      delay(200);
+      EncenderDisplay(contador);
+  	  Serial.println("sube");
+      PararSistema();
+      EncenderLed(1);
+      delay(3000);
+      Apagar();
+    }
+    else if (baja!=LOW )
+    {
+      PararSistema();
+      Serial.println("en movimiento");
+      contador--; 
+      delay(200);
+      EncenderDisplay(contador);
+      Serial.println("baja");
+      EncenderLed(1);
+      delay(3000);
+      Apagar();
+    }  
+ }	
+```
 
 ### Parar sistema
 esta funcion corresponde al tercer boton, frena el asensor e informa el estado no deja hacer otra operacion hasta que el boton pulsado de nuevo
-
-![parar sistema (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/14c5854c-86d7-48cc-9fa4-f53c23437c65)
+``` cpp
+void PararSistema()
+{
+  	 int pausa = analogRead(boton3);
+	 while (pausa!=LOW) 
+      {
+// para que vuelva a funcionar debe precionarse 2 seg el boton3
+        Serial.println("sin movimiento"); 
+        Serial.println("pausado"); 
+        EncenderLed(2); 
+        delay(1000);  
+        delay(200); 
+        int boton= analogRead(boton3);
+      	delay(10);
+        if (boton!=LOW)
+        {
+           Apagar();  
+           Serial.println("activado para su servicio. elige una operacion");
+          delay(1000);
+     	   break; 
+        }
+    }   	   
+}
+```
 
 ### Encender display 
 esta funcion enciende el numero que le pasamos por parametro en el display 7 segmentos 
-
-![encender display (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/ebfabdd4-ca45-4eaf-831e-5584ab71ca57)
+``` cpp 
+void EncenderDisplay(int numero)
+{
+  switch(numero)
+  {
+     case 0:
+    	digitalWrite(A, HIGH);
+    	digitalWrite(B, HIGH);
+     digitalWrite(C, HIGH);
+    	digitalWrite(D, HIGH);
+     digitalWrite(E, HIGH);
+    	digitalWrite(F, HIGH);
+    	break; 
+  	case 1:
+    	digitalWrite(B, HIGH);
+    	digitalWrite(C, HIGH);
+    	break;
+    case 2:
+      digitalWrite(A, HIGH);
+    	digitalWrite(B, HIGH);
+      digitalWrite(D, HIGH);
+    	digitalWrite(E, HIGH);
+     digitalWrite(G, HIGH);
+    	break;
+    case 3:
+    	digitalWrite(A, HIGH);
+    	digitalWrite(B, HIGH);  		
+     digitalWrite(C, HIGH);
+    	digitalWrite(D, HIGH);
+     digitalWrite(G, HIGH);
+    	break;
+    case 4:
+    	digitalWrite(B, HIGH);
+    	digitalWrite(C, HIGH);
+     digitalWrite(F, HIGH);
+     digitalWrite(G, HIGH);
+    	break;
+    case 5:
+    	 digitalWrite(A, HIGH);
+    	 digitalWrite(C, HIGH);
+      digitalWrite(D, HIGH);
+     	digitalWrite(F, HIGH);
+      digitalWrite(G, HIGH);
+    	 break;
+    case 6:
+    	 digitalWrite(A, HIGH);
+     	digitalWrite(B, HIGH);
+     	digitalWrite(C, HIGH);
+      digitalWrite(D, HIGH);
+    	 digitalWrite(E, HIGH);
+      digitalWrite(G, HIGH);
+    	break;
+    case 7:
+     	digitalWrite(A, HIGH);
+     	digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+    	break;
+    case 8:
+     	digitalWrite(A, HIGH);
+     	digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, HIGH);
+     	digitalWrite(E, HIGH);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, HIGH);
+    	break;
+    case 9:
+    	digitalWrite(A, HIGH);
+    	digitalWrite(B, HIGH);
+     digitalWrite(C, HIGH);
+    	digitalWrite(D, HIGH);
+     digitalWrite(F, HIGH);
+     digitalWrite(G, HIGH);
+    	break;  
+    case 10:
+    	//error
+    	digitalWrite(A, HIGH);
+    	digitalWrite(G, HIGH);  		
+     digitalWrite(E, HIGH);
+    	digitalWrite(D, HIGH);
+     digitalWrite(F, HIGH);
+  	}
+  
+```
 
 tiene 10 case este ultimo es un mensaje de error 
-
-![case 10](https://github.com/bautista-escalante/ascensor/assets/123372673/27fbe103-888b-4e11-ad36-6380586644b6)
+``` cpp
+   case 10:
+    	//error
+    	digitalWrite(A, HIGH);
+    	digitalWrite(G, HIGH);  		
+     digitalWrite(E, HIGH);
+    	digitalWrite(D, HIGH);
+     digitalWrite(F, HIGH);
+```
 
 ### Validar pisos 
 verifica que efectivamente este entre el piso 0 y 9 de lo contrario imforma un error en el monitor 
-
-![sketch_apr1b _ Arduino IDE 2 0 5-nightly-20230401 15_5_2023 19_02_58 (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/5dfe970a-24a8-4c28-bb2e-2b9f6c11e9bc)
+``` cpp 
+void ValidarPisos()
+{
+  while (contador<0 || contador>9) 
+  {
+    if (contador<0) 
+    {
+      Apagar();
+      EncenderDisplay(10);
+      EncenderLed(2);
+      Serial.println("error. el piso seleccionado no existe, suba");
+      delay(1000); 
+      contador++;
+    }
+    else
+    {
+      Apagar();
+      EncenderDisplay(10);
+      EncenderLed(2);
+      Serial.println("error. el piso seleccionado no existe, baje");
+      contador--;
+    }
+  }
+}
+```
 
 ### Encender led 
 esta funcion enciende un led segun el numero uqe le pasemos por parametro 
-
-![encenderled (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/7af02c50-7aa7-4d2f-834e-1e16302f16c8)
+``` cpp
+void EncenderLed(int led)
+{
+  if (led==1)
+  {
+  	digitalWrite(ledAccion, HIGH);
+  }
+  if (led==2)
+  {
+  	digitalWrite(ledPausa, HIGH);
+  }
+}
+```
 
 ### Apagar
 esta funcion apaga todos los leds de el display 7 segmentos y los leds de informe 
-
-![apagar (2)](https://github.com/bautista-escalante/ascensor/assets/123372673/e55c1e6e-050f-4185-92e5-902b732c31d0)
+``` cpp 
+void Apagar()
+{
+    digitalWrite(A ,LOW);  
+    digitalWrite(B, LOW);
+    digitalWrite(C,LOW);  
+    digitalWrite(D, LOW);
+    digitalWrite(E,LOW);
+    digitalWrite(F, LOW);
+    digitalWrite(G, LOW);
+    digitalWrite(ledAccion,LOW);
+    digitalWrite(ledPausa,LOW);
+}
+```
 
 # Link del proyecto
 
